@@ -5,6 +5,26 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: true
+    database-platform: org.hibernate.dialect.PostgreSQL82Dialect
+  datasource:
+    url: ${database.jdbc.url}/${database.name}
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+database:
+  name: movie_finder_db
+  jdbc:
+    url: jdbc:postgresql://localhost:5432
 
 server:
   port: 8081
+
+finder:
+  feign-clients:
+    kinopoisk:
+      url: 'https://api.kinopoisk.dev'
+      token: token
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG

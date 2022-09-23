@@ -18,11 +18,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class ContentTagPK implements Serializable {
+public class ContentGenrePK implements Serializable {
 
     @Column(name = "content_id")
     private Long contentId;
 
-    @Column(name = "tag_id")
-    private Long tagId;
+    @Column(name = "genre_id")
+    private Long genreId;
 }

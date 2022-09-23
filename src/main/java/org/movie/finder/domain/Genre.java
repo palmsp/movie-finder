@@ -18,17 +18,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * {@link Entity} for Tag.
+ * {@link Entity} for Genre.
  */
 @Entity
-@Table(name = "tag")
+@Table(name = "genre")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Tag {
+public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,6 @@ public class Tag {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ContentTagLink> tagLinks;
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ContentGenreLink> genreLinks;
 }
