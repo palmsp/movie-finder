@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.movie.finder.domain.Content;
 import org.movie.finder.domain.ContentGenreLink;
 import org.movie.finder.domain.ContentTagLink;
+import org.movie.finder.domain.ContentType;
 
 @Data
 @AllArgsConstructor
@@ -26,7 +27,7 @@ public class ContentItem {
 
     private String type;
 
-    private Long typeId;
+    private Integer typeId;
 
     private String desc;
 
@@ -63,6 +64,7 @@ public class ContentItem {
                 .name(content.getName())
                 .desc(content.getDescription())
                 .typeId(content.getTypeId())
+                .type(ContentType.contentTypeById(content.getTypeId()).getTypeName())
                 .releaseYear(content.getReleaseYear())
                 .rate(content.getRate())
                 .seen(content.getSeen())

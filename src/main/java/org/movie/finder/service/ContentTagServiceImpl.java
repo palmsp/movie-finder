@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.movie.finder.domain.Content;
 import org.movie.finder.domain.ContentTagLink;
 import org.movie.finder.dto.ContentItem;
@@ -22,10 +23,11 @@ import org.springframework.transaction.annotation.Transactional;
  * {@inheritDoc}.
  */
 @Service
+@Slf4j
 public class ContentTagServiceImpl implements ContentTagService {
 
-    private ContentRepository contentRepository;
-    private ContentTagLinksRepository contentTagLinksRepository;
+    private final ContentRepository contentRepository;
+    private final ContentTagLinksRepository contentTagLinksRepository;
 
     public ContentTagServiceImpl(
             ContentRepository contentRepository,
@@ -38,10 +40,10 @@ public class ContentTagServiceImpl implements ContentTagService {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ContentItem> findContentWithoutTags() {
-        List<Content> contents = contentRepository.findContentWithoutTags();
-        List<ContentItem> contentItems = contents.stream().map(ContentItem::from).collect(Collectors.toList());
+        List<Content> contentList = contentRepository.findContentWithoutTags();
+        List<ContentItem> contentItems = contentList.stream().map(ContentItem::from).collect(Collectors.toList());
         return contentItems;
     }
 
@@ -50,44 +52,48 @@ public class ContentTagServiceImpl implements ContentTagService {
      */
     @Override
     public void addTagsToContent(List<ContentTagItem> contentTags) {
+        log.info("Adding tags to content started");
         List<ContentTagLink> contentTagsEntityLinks = contentTags.stream().map(ContentTagItem::from)
                 .collect(Collectors.toList());
         contentTagLinksRepository.saveAll(contentTagsEntityLinks);
+        log.info("Adding tags to content finished");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ContentItem> findContentByTags(List<TagItem> tags) {
-        List<Content> contents = getContents(tags);
-        if (isNotEmpty(contents)) {
-            List<ContentItem> contentItems = contents.stream()
+        log.info("Searching content by tags started");
+        List<Content> contentList = getContent(tags);
+        if (isNotEmpty(contentList)) {
+            List<ContentItem> contentItems = contentList.stream()
                     .map(ContentItem::from)
                     .collect(Collectors.toList());
             return contentItems;
         }
+        log.info("Searching content by tags finished");
         return emptyList();
     }
 
-    private List<Content> getContents(List<TagItem> tags) {
+    private List<Content> getContent(List<TagItem> tags) {
         List<Long> tagIds = tags.stream().map(TagItem::getId).filter(Objects::nonNull).collect(Collectors.toList());
         List<String> tagNames = tags.stream().map(TagItem::getName).collect(Collectors.toList());
-        List<Content> contents = isNotEmpty(tagIds) ? contentRepository.findContentsByTags(tagIds) :
-                contentRepository.findContentsByTagNames(tagNames);
-        return contents;
+        List<Content> contentList = isNotEmpty(tagIds) ? contentRepository.findContentByTags(tagIds) :
+                contentRepository.findContentByTagNames(tagNames);
+        return contentList;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ContentItem> findNotSeenMoviesByTags(List<TagItem> tags) {
-        List<Content> contents = getContents(tags);
-        if (isNotEmpty(contents)) {
-            List<ContentItem> contentItems = contents.stream().filter(Predicate.not(Content::getSeen))
+        List<Content> contentList = getContent(tags);
+        if (isNotEmpty(contentList)) {
+            List<ContentItem> contentItems = contentList.stream().filter(Predicate.not(Content::getSeen))
                     .map(ContentItem::from)
                     .collect(Collectors.toList());
             return contentItems;

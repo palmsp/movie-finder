@@ -41,12 +41,12 @@ public class ContentRepositoryTest {
         Content content2 = ContentGenerator.content2Builder().build();
         Content content3 = ContentGenerator.content3Builder().build();
 
-        List<Content> contents = contentRepository.saveAll(List.of(content1, content2, content3));
-        Content movieId1 = contents.stream().filter(m -> m.getName().equals(content1.getName())).findFirst()
+        List<Content> contentList = contentRepository.saveAll(List.of(content1, content2, content3));
+        Content movieId1 = contentList.stream().filter(m -> m.getName().equals(content1.getName())).findFirst()
                 .orElse(null);
-        Content movieId2 = contents.stream().filter(m -> m.getName().equals(content2.getName())).findFirst()
+        Content movieId2 = contentList.stream().filter(m -> m.getName().equals(content2.getName())).findFirst()
                 .orElse(null);
-        Content movieId3 = contents.stream().filter(m -> m.getName().equals(content3.getName())).findFirst()
+        Content movieId3 = contentList.stream().filter(m -> m.getName().equals(content3.getName())).findFirst()
                 .orElse(null);
 
         Tag tag1 = Tag.builder().name("sad").build();
@@ -133,10 +133,10 @@ public class ContentRepositoryTest {
 
     @Test
     public void shouldFindMoviesByRate() {
-        List<Content> contents = contentRepository.findContentsByRateIsGreaterThanEqual(7.5);
+        List<Content> contentList = contentRepository.findContentsByRateIsGreaterThanEqual(7.5);
 
-        assertThat(contents).hasSize(1);
-        assertThat(contents).extracting(Content::getName).containsExactlyInAnyOrder("movie3");
+        assertThat(contentList).hasSize(1);
+        assertThat(contentList).extracting(Content::getName).containsExactlyInAnyOrder("movie3");
     }
 
     @Test
@@ -149,12 +149,12 @@ public class ContentRepositoryTest {
 
     @Test
     public void shouldFindMoviesByProperties() {
-        List<Content> contents = contentRepository.findContentsByRateIsGreaterThanEqualAndReleaseYearIsLessThanEqual(
+        List<Content> contentList = contentRepository.findContentsByRateIsGreaterThanEqualAndReleaseYearIsLessThanEqual(
                 7.0,
                 2000);
 
-        assertThat(contents).hasSize(2);
-        assertThat(contents).extracting(Content::getName).containsExactlyInAnyOrder("movie2", "movie3");
+        assertThat(contentList).hasSize(2);
+        assertThat(contentList).extracting(Content::getName).containsExactlyInAnyOrder("movie2", "movie3");
     }
 
 
@@ -168,26 +168,26 @@ public class ContentRepositoryTest {
                 .build();
         contentRepository.save(content);
 
-        List<Content> contents = contentRepository.findAll();
-        assertThat(contents).hasSize(4);
-        assertThat(contents).extracting(Content::getName).contains("movie4");
+        List<Content> contentList = contentRepository.findAll();
+        assertThat(contentList).hasSize(4);
+        assertThat(contentList).extracting(Content::getName).contains("movie4");
     }
 
 
     @Test
     void findMoviesByTagNames() {
-        List<Content> contents = contentRepository.findContentsByTagNames(List.of("sad", "autumn"));
+        List<Content> contentList = contentRepository.findContentByTagNames(List.of("sad", "autumn"));
 
-        assertThat(contents).hasSize(2);
-        assertThat(contents).extracting(Content::getName).containsExactlyInAnyOrder("movie1", "movie2");
+        assertThat(contentList).hasSize(2);
+        assertThat(contentList).extracting(Content::getName).containsExactlyInAnyOrder("movie1", "movie2");
     }
 
     @Test
     void findMoviesByGenreNames() {
-        List<Content> contents = contentRepository.findContentsByGenreNames(List.of("comedy"));
+        List<Content> contentList = contentRepository.findContentByGenreNames(List.of("comedy"));
 
-        assertThat(contents).hasSize(2);
-        assertThat(contents).flatExtracting(Content::getGenreLinks)
+        assertThat(contentList).hasSize(2);
+        assertThat(contentList).flatExtracting(Content::getGenreLinks)
                 .map(ContentGenreLink::getGenre)
                 .map(Genre::getName)
                 .containsExactlyInAnyOrder("comedy", "comedy");
@@ -203,9 +203,9 @@ public class ContentRepositoryTest {
                 .build();
         contentRepository.save(content);
 
-        List<Content> contents = contentRepository.findContentWithoutTags();
+        List<Content> contentList = contentRepository.findContentWithoutTags();
 
-        assertThat(contents).hasSize(1);
-        assertThat(contents).extracting(Content::getName).containsExactlyInAnyOrder(content.getName());
+        assertThat(contentList).hasSize(1);
+        assertThat(contentList).extracting(Content::getName).containsExactlyInAnyOrder(content.getName());
     }
 }

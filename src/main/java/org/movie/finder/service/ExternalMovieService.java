@@ -1,8 +1,7 @@
 package org.movie.finder.service;
 
-import java.util.List;
-
-import org.movie.finder.domain.Content;
+import org.movie.finder.domain.ContentFilter;
+import org.movie.finder.domain.ContentResult;
 
 /**
  * Service for work with External movies.
@@ -12,8 +11,9 @@ public interface ExternalMovieService {
     /**
      * Find movies in external source.
      *
-     * @return list of {@link Content}
+     * @param filter filter
+     * @return list of {@link ContentResult}
      */
-    List<Content> findExternalMovies();
+    ContentResult findExternalMovies(ContentFilter filter);
 
 }

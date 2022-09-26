@@ -42,7 +42,7 @@ public class Content implements Serializable {
     private String name;
 
     @Column(name = "type_id")
-    private Long typeId;
+    private Integer typeId;
 
     @Column(name = "description")
     private String description;
@@ -55,6 +55,9 @@ public class Content implements Serializable {
 
     @Column(name = "is_seen")
     private Boolean seen;
+
+    @Column(name = "external_id")
+    private Long externalId;
 
     @OneToMany(mappedBy = "content", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContentGenreLink> genreLinks;

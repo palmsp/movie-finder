@@ -22,18 +22,18 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     List<Content> findContentsByRateIsGreaterThanEqualAndReleaseYearIsLessThanEqual(Double rate, int year);
 
     @Query("select c from Content c left join ContentTagLink ct on c.id = ct.id.contentId where ct.id.tagId in (:tagIds)")
-    List<Content> findContentsByTags(@Param("tagIds") Collection<Long> tagIds);
+    List<Content> findContentByTags(@Param("tagIds") Collection<Long> tagIds);
 
     @Query("select c from Content c left join ContentTagLink ct on c.id = ct.id.contentId " +
             "join Tag t on ct.id.tagId = t.id where t.name in (:tags)")
-    List<Content> findContentsByTagNames(@Param("tags") Collection<String> tags);
+    List<Content> findContentByTagNames(@Param("tags") Collection<String> tags);
 
     @Query("select c from Content c left join ContentGenreLink cg on c.id = cg.id.contentId where cg.id.genreId in (:genreIds)")
-    List<Content> findContentsByGenres(@Param("genreIds") Collection<Long> genreIds);
+    List<Content> findContentByGenres(@Param("genreIds") Collection<Long> genreIds);
 
     @Query("select c from Content c left join ContentGenreLink cg on c.id = cg.id.contentId " +
             "join Genre g on cg.id.genreId = g.id where g.name in (:genres)")
-    List<Content> findContentsByGenreNames(@Param("genres") Collection<String> genres);
+    List<Content> findContentByGenreNames(@Param("genres") Collection<String> genres);
 
     @Query("select c from Content c left join ContentTagLink ct on c.id = ct.id.contentId where ct.id.tagId is null")
     List<Content> findContentWithoutTags();

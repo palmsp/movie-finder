@@ -34,15 +34,15 @@ class ContentTagServiceTest {
 
     @Test
     void shouldFindContentWithoutTags() {
-        List<Content> contents = List.of(
+        List<Content> contentList = List.of(
                 ContentGenerator.content1Builder().build(),
                 ContentGenerator.content2Builder().build());
-        when(contentRepository.findContentWithoutTags()).thenReturn(contents);
+        when(contentRepository.findContentWithoutTags()).thenReturn(contentList);
 
-        List<ContentItem> contentList = contentTagService.findContentWithoutTags();
+        List<ContentItem> contentItems = contentTagService.findContentWithoutTags();
 
-        assertThat(contentList).isNotNull();
-        assertThat(contentList).hasSize(2);
+        assertThat(contentItems).isNotNull();
+        assertThat(contentItems).hasSize(2);
     }
 
     @Test
@@ -78,13 +78,13 @@ class ContentTagServiceTest {
                 .build();
         List<TagItem> tagItems = List.of(tagItem1, tagItem2);
         List<Long> tagIds = tagItems.stream().map(TagItem::getId).collect(Collectors.toList());
-        List<Content> contents = ContentGenerator.contentList();
-        when(contentRepository.findContentsByTags(tagIds)).thenReturn(contents);
+        List<Content> contentList = ContentGenerator.contentList();
+        when(contentRepository.findContentByTags(tagIds)).thenReturn(contentList);
 
-        List<ContentItem> contentList = contentTagService.findContentByTags(tagItems);
+        List<ContentItem> contentItems = contentTagService.findContentByTags(tagItems);
 
-        assertThat(contentList).isNotNull();
-        assertThat(contentList).hasSize(3);
+        assertThat(contentItems).isNotNull();
+        assertThat(contentItems).hasSize(3);
     }
 
     @Test
@@ -99,13 +99,13 @@ class ContentTagServiceTest {
                 .build();
         List<TagItem> tagItems = List.of(tagItem1, tagItem2);
         List<String> tags = tagItems.stream().map(TagItem::getName).collect(Collectors.toList());
-        List<Content> contents = ContentGenerator.contentList();
-        when(contentRepository.findContentsByTagNames(tags)).thenReturn(contents);
+        List<Content> contentList = ContentGenerator.contentList();
+        when(contentRepository.findContentByTagNames(tags)).thenReturn(contentList);
 
-        List<ContentItem> contentList = contentTagService.findContentByTags(tagItems);
+        List<ContentItem> contentItems = contentTagService.findContentByTags(tagItems);
 
-        assertThat(contentList).isNotNull();
-        assertThat(contentList).hasSize(3);
+        assertThat(contentItems).isNotNull();
+        assertThat(contentItems).hasSize(3);
     }
 
     @Test
@@ -120,17 +120,17 @@ class ContentTagServiceTest {
                 .build();
         List<TagItem> tagItems = List.of(tagItem1, tagItem2);
         List<Long> tagIds = tagItems.stream().map(TagItem::getId).collect(Collectors.toList());
-        List<Content> contents = List.of(
+        List<Content> contentList = List.of(
                 ContentGenerator.content1Builder().seen(false).build(),
                 ContentGenerator.content2Builder().seen(false).build(),
                 ContentGenerator.content3Builder().seen(true).build()
         );
-        when(contentRepository.findContentsByTags(tagIds)).thenReturn(contents);
+        when(contentRepository.findContentByTags(tagIds)).thenReturn(contentList);
 
-        List<ContentItem> contentList = contentTagService.findNotSeenMoviesByTags(tagItems);
+        List<ContentItem> contentItems = contentTagService.findNotSeenMoviesByTags(tagItems);
 
-        assertThat(contentList).isNotNull();
-        assertThat(contentList).hasSize(2);
+        assertThat(contentItems).isNotNull();
+        assertThat(contentItems).hasSize(2);
     }
 
 }
