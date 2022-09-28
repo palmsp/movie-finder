@@ -67,7 +67,6 @@ public class ContentItem {
                 .type(ContentType.contentTypeById(content.getTypeId()).getTypeName())
                 .releaseYear(content.getReleaseYear())
                 .rate(content.getRate())
-                .seen(content.getSeen())
                 .tags(tagItems)
                 .genres(genreItems)
                 .build();

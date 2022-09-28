@@ -108,29 +108,4 @@ class ContentTagServiceTest {
         assertThat(contentItems).hasSize(3);
     }
 
-    @Test
-    void shouldFindNotSeenMoviesByTags() {
-        TagItem tagItem1 = TagItem.builder()
-                .id(98L)
-                .name("winter")
-                .build();
-        TagItem tagItem2 = TagItem.builder()
-                .id(99L)
-                .name("sunny")
-                .build();
-        List<TagItem> tagItems = List.of(tagItem1, tagItem2);
-        List<Long> tagIds = tagItems.stream().map(TagItem::getId).collect(Collectors.toList());
-        List<Content> contentList = List.of(
-                ContentGenerator.content1Builder().seen(false).build(),
-                ContentGenerator.content2Builder().seen(false).build(),
-                ContentGenerator.content3Builder().seen(true).build()
-        );
-        when(contentRepository.findContentByTags(tagIds)).thenReturn(contentList);
-
-        List<ContentItem> contentItems = contentTagService.findNotSeenMoviesByTags(tagItems);
-
-        assertThat(contentItems).isNotNull();
-        assertThat(contentItems).hasSize(2);
-    }
-
 }

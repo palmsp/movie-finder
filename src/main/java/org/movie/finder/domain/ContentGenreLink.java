@@ -17,7 +17,7 @@ import lombok.Setter;
  * {@link Entity} for Content Genre Link.
  */
 @Entity
-@Table(name = "content_genre_link")
+@Table(name = "content_genre_link", schema = "content")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

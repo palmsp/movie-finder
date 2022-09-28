@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,7 @@ import org.hibernate.annotations.UpdateTimestamp;
  * {@link Entity} for Content.
  */
 @Entity
-@Table(name = "content")
+@Table(name = "content", schema = "content")
 @Getter
 @Setter
 @Builder
@@ -53,9 +54,6 @@ public class Content implements Serializable {
     @Column(name = "rate")
     private Double rate;
 
-    @Column(name = "is_seen")
-    private Boolean seen;
-
     @Column(name = "external_id")
     private Long externalId;
 
@@ -72,4 +70,8 @@ public class Content implements Serializable {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Version
+    @Column(name = "version")
+    private Integer version;
 }

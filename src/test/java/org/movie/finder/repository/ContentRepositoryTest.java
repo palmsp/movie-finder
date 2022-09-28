@@ -19,8 +19,10 @@ import org.movie.finder.domain.Genre;
 import org.movie.finder.domain.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
+@ActiveProfiles("test")
 @TestInstance(Lifecycle.PER_CLASS)
 public class ContentRepositoryTest {
 
@@ -65,8 +67,8 @@ public class ContentRepositoryTest {
         Long tagId4 = tags.stream().filter(t -> t.getName().equals(tag4.getName())).map(Tag::getId).findFirst()
                 .orElse(null);
 
-        Genre genre1 = Genre.builder().name("comedy").build();
-        Genre genre2 = Genre.builder().name("drama").build();
+        Genre genre1 = Genre.builder().id(9998L).name("comedy").build();
+        Genre genre2 = Genre.builder().id(9999L).name("drama").build();
         List<Genre> genres = genreRepository.saveAll(List.of(genre1, genre2));
 
         Long genreId1 = genres.stream().filter(g -> g.getName().equals(genre1.getName())).map(Genre::getId).findFirst()

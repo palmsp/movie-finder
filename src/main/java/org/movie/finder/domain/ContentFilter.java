@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 @Entity
-@Table(name = "content_filter")
+@Table(name = "content_filter", schema = "content")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -53,4 +54,8 @@ public class ContentFilter {
 
     @Column(name = "limit_per_page")
     private int limitPerPage;
+
+    @Version
+    @Column(name = "version")
+    private Integer version;
 }

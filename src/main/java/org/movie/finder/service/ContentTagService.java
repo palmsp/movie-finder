@@ -32,12 +32,4 @@ public interface ContentTagService {
      * @return list of {@link ContentItem}
      */
     List<ContentItem> findContentByTags(List<TagItem> tags);
-
-    /**
-     * Find content items by tags.
-     *
-     * @param tags list of tags
-     * @return list of {@link ContentItem}
-     */
-    List<ContentItem> findNotSeenMoviesByTags(List<TagItem> tags);
 }

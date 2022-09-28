@@ -21,7 +21,7 @@ import lombok.Setter;
  * {@link Entity} for Tag.
  */
 @Entity
-@Table(name = "tag")
+@Table(name = "tag", schema = "content")
 @Getter
 @Setter
 @Builder

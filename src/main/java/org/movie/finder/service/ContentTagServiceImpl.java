@@ -5,7 +5,6 @@ import static org.hibernate.internal.util.collections.CollectionHelper.isNotEmpt
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
@@ -83,21 +82,5 @@ public class ContentTagServiceImpl implements ContentTagService {
         List<Content> contentList = isNotEmpty(tagIds) ? contentRepository.findContentByTags(tagIds) :
                 contentRepository.findContentByTagNames(tagNames);
         return contentList;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<ContentItem> findNotSeenMoviesByTags(List<TagItem> tags) {
-        List<Content> contentList = getContent(tags);
-        if (isNotEmpty(contentList)) {
-            List<ContentItem> contentItems = contentList.stream().filter(Predicate.not(Content::getSeen))
-                    .map(ContentItem::from)
-                    .collect(Collectors.toList());
-            return contentItems;
-        }
-        return emptyList();
     }
 }

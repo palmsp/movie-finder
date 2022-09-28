@@ -2,15 +2,15 @@ spring:
   application:
     name: movie-finder
   jpa:
-    hibernate:
-      ddl-auto: update
-    generate-ddl: true
     database-platform: org.hibernate.dialect.PostgreSQL82Dialect
   datasource:
     url: ${database.jdbc.url}/${database.name}
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:db.changelog-master.yaml
+
 database:
   name: movie_finder_db
   jdbc:

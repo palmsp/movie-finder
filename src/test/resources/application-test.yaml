@@ -1,12 +1,14 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:mydb
+    url: jdbc:h2:mem:movie_finder_db;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:sql/init_h2.sql';
     username: sa
     password: password
     driverClassName: org.h2.Driver
   jpa:
     show-sql: true
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+  test:
+    database:
+      replace: none
 
 logging:
   level:
