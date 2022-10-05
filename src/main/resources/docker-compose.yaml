@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  movie-finder-db:
+    image: postgres:11
+    container_name: movie-finder-db
+    ports:
+      - "5432:5432"
+    #command: postgres -c logging_collector=on -c log_min_duration_statement=0
+    environment:
+      POSTGRES_DB: movie_finder_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
